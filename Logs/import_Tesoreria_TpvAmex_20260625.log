@@ -1,0 +1,8 @@
+2026-06-25 18:10:25,705 [INFO] Bloque 0 inicializado. Logging configurado en: C:\Users\Analista Tesoreria\Documents\GUMER\SCRIPTS\PYTHON\LIMPIEZA_AMEX_POWER\Logs\import_Tesoreria_TpvAmex_20260625.log
+2026-06-25 18:10:25,798 [INFO] Previo a inserción, MAX(Id)=6183
+2026-06-25 18:10:25,807 [INFO] Snapshot pre-insert guardado en: C:\Users\Analista Tesoreria\Documents\GUMER\SCRIPTS\PYTHON\LIMPIEZA_AMEX_POWER\audit_insert_output\audit_pre_insert_20260625T181025.csv
+2026-06-25 18:10:54,361 [INFO] Importación completada correctamente.
+2026-06-25 18:10:54,364 [INFO] Snapshot post-insert guardado en: C:\Users\Analista Tesoreria\Documents\GUMER\SCRIPTS\PYTHON\LIMPIEZA_AMEX_POWER\audit_insert_output\audit_post_insert_20260625T181054.csv
+2026-06-25 18:10:54,365 [INFO] MAX(Id) después de inserción=6293
+2026-06-25 18:10:54,365 [INFO] Filas esperadas=109, Filas insertadas=110
+2026-06-25 18:10:54,367 [INFO] Comparativa TotalDelEnvio: CSV_sum=298773.08 DB_sum=298773.08 Diff=0.0

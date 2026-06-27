@@ -1,0 +1,43 @@
+import pandas as pd
+
+# Leer Excel
+df = pd.read_excel("01 - 13 ENVIO AMERICAN EXPRESS ABRIL.xlsx",skiprows=9 ,engine="openpyxl")
+
+
+# Quitar prefijo $MXN en todo el DataFrame
+df = df.replace(r'^\$MXN\s*', '', regex=True)
+
+# Convertir columnas de fecha a datetime y luego a str con formato Año-Mes-Día
+for col in df.columns:
+    try:
+        df[col] = pd.to_datetime(df[col], errors="ignore", dayfirst=True)
+        if pd.api.types.is_datetime64_any_dtype(df[col]):
+            df[col] = df[col].dt.strftime("%Y-%m-%d")
+    except Exception:
+        pass
+print(df.columns.tolist())
+# Renombrar columnas (ejemplo, ajusta según tus nombres reales)
+df = df.rename(columns={
+  "Fecha de envío":"FechaEnvio",
+  "Número de factura del monto del resumen de los cargos":"NumeroFacturaDeCargos",
+  "Número de pago":"NumeroDePago",
+  "Cargos totales":"CargosTotales",
+  "Créditos": "Creditos",
+  "Monto del envío": "MontoDeEnvio",
+  "Total del envío": "TotalDelEnvio",
+  "Monto del descuento": "MontoDelDescuento",
+  "Cuotas e incentivos": "CuotasEIncentivos",
+  "Monto del pago": "MontoDePago",
+  "Número de establecimiento receptor del pago": "IdAfiliacion",
+  "Número de establecimiento":"NumeroEstablecimiento",
+  "Sucursal que envía": "SucursalQueEnvia",
+  "Conteo de transacciones": "ConteoDeTransacciones",
+  "Fecha de pago": "FechaPago",
+  "Nombre de sucursal que envía": "NombreSucursal",
+  "IVA": "IVA",
+  "Descripción": "Descripcion",
+  "Fecha de la transacción": "FechaTransaccion",
+  "Número de mensualidades": "NumeroDeMensualidades",
+})
+# Exportar a CSV UTF-8
+df.to_csv("AMEX_2026-04-17.csv", index=False, encoding="utf-8")

@@ -42,13 +42,11 @@ data_dir = os.path.join(
 
 # ------------------ CONEXIÓN A MARIA DB ------------------
 # Ajusta estas credenciales según tu entorno
-user = "usrAnalistaCred03"  # usuario DB
-password = quote_plus(
-    "9TVOL0vVsP79QEg9"
-)  # contraseña (quote_plus para caracteres especiales)
-host = "192.168.1.21"  # host o IP del servidor
-db = "InsumosCombustible"  # base de datos destino
-target_table = "Tesoreria_TpvAmex"  # tabla destino para insertar
+user = ""  # usuario DB
+password = quote_plus("")  # contraseña (quote_plus para caracteres especiales)
+host = ""  # host o IP del servidor
+db = ""  # base de datos destino
+target_table = ""  # tabla destino para insertar
 
 # Engine SQLAlchemy (requiere pymysql instalado)
 # maria_engine = create_engine(

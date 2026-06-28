@@ -1,0 +1,81 @@
+2026-06-27 18:53:02,973 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TVP_Amex_20260627.log
+2026-06-27 18:53:03,320 [INFO] Previo a inserción, MAX(Id)=None
+2026-06-27 18:53:03,330 [INFO] Snapshot pre-insert guardado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/audit_insert_output/audit_pre_insert_20260627T185303.csv
+2026-06-27 18:57:35,930 [INFO] Importación completada correctamente.
+2026-06-27 18:57:35,940 [INFO] Snapshot post-insert guardado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/audit_insert_output/audit_post_insert_20260627T185735.csv
+2026-06-27 18:57:35,944 [INFO] MAX(Id) después de inserción=109
+2026-06-27 18:57:35,945 [WARNING] No se pudo comparar MAX(Id) previo/post. prev=None new=109
+2026-06-27 18:57:35,949 [INFO] Se usó suma total de tabla como fallback para comparativa.
+2026-06-27 18:57:35,951 [INFO] Comparativa TotalDelEnvio: CSV_sum=298773.08 DB_sum=298773.08 Diff=0.0
+2026-06-27 18:59:24,500 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TVP_Amex_20260627.log
+2026-06-27 18:59:24,813 [INFO] Previo a inserción, MAX(Id)=109
+2026-06-27 18:59:24,828 [INFO] Snapshot pre-insert guardado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/audit_insert_output/audit_pre_insert_20260627T185924.csv
+2026-06-27 18:59:40,982 [INFO] Importación completada correctamente.
+2026-06-27 18:59:40,995 [INFO] Snapshot post-insert guardado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/audit_insert_output/audit_post_insert_20260627T185940.csv
+2026-06-27 18:59:40,998 [INFO] MAX(Id) después de inserción=218
+2026-06-27 18:59:40,999 [INFO] Filas esperadas=109, Filas insertadas=109
+2026-06-27 18:59:41,005 [INFO] Comparativa TotalDelEnvio: CSV_sum=298773.08 DB_sum=298773.08 Diff=0.0
+2026-06-27 20:11:53,557 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TVP_Amex_20260627.log
+2026-06-27 20:12:02,612 [INFO] Snapshot post-insert guardado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/audit_insert_output/audit_post_insert_20260627T201202.csv
+2026-06-27 20:12:02,615 [INFO] MAX(Id) después de inserción=109
+2026-06-27 20:12:02,616 [WARNING] No se pudo comparar MAX(Id) previo/post. prev=None new=109
+2026-06-27 20:12:02,620 [INFO] Se usó suma total de tabla como fallback para comparativa.
+2026-06-27 20:12:02,620 [INFO] Comparativa TotalDelEnvio: CSV_sum=298773.08 DB_sum=298773.08 Diff=0.0
+2026-06-27 20:13:43,143 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TVP_Amex_20260627.log
+2026-06-27 20:23:09,590 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TVP_Amex_20260627.log
+2026-06-27 20:33:32,172 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TVP_Amex_20260627.log
+2026-06-27 20:34:51,450 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TVP_Amex_20260627.log
+2026-06-27 20:37:22,746 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TVP_Amex_20260627.log
+2026-06-27 20:37:37,043 [INFO] ✅ Importación completada: 135 filas insertadas.
+2026-06-27 20:37:37,048 [INFO] Snapshot post-insert guardado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/audit_insert_output/audit_post_insert_20260627T203737.csv
+2026-06-27 20:37:37,050 [INFO] MAX(Id) después de inserción=135
+2026-06-27 20:37:37,052 [ERROR] No se pudo obtener MAX(Id) post-insert: name 'prev_max_id' is not defined
+Traceback (most recent call last):
+  File "/home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/LayoutNewTPVAMEX.py", line 929, in <module>
+    if prev_max_id is not None and new_max_id is not None:
+       ^^^^^^^^^^^
+NameError: name 'prev_max_id' is not defined. Did you mean: 'new_max_id'?
+2026-06-27 20:37:37,057 [ERROR] Error durante la comparativa de sumas: name 'prev_max_id' is not defined
+Traceback (most recent call last):
+  File "/home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/LayoutNewTPVAMEX.py", line 994, in <module>
+    prev_max_id is not None
+    ^^^^^^^^^^^
+NameError: name 'prev_max_id' is not defined. Did you mean: 'new_max_id'?
+2026-06-27 20:41:52,226 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TVP_Amex_20260627.log
+2026-06-27 20:42:06,861 [INFO] ✅ Importación completada: 222 filas insertadas.
+2026-06-27 20:42:06,869 [INFO] Snapshot post-insert guardado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/audit_insert_output/audit_post_insert_20260627T204206.csv
+2026-06-27 20:42:06,873 [INFO] MAX(Id) después de inserción=357
+2026-06-27 20:42:06,875 [ERROR] No se pudo obtener MAX(Id) post-insert: name 'prev_max_id' is not defined
+Traceback (most recent call last):
+  File "/home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/LayoutNewTPVAMEX.py", line 929, in <module>
+    if prev_max_id is not None and new_max_id is not None:
+       ^^^^^^^^^^^
+NameError: name 'prev_max_id' is not defined. Did you mean: 'new_max_id'?
+2026-06-27 20:42:06,881 [ERROR] Error durante la comparativa de sumas: name 'prev_max_id' is not defined
+Traceback (most recent call last):
+  File "/home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/LayoutNewTPVAMEX.py", line 994, in <module>
+    prev_max_id is not None
+    ^^^^^^^^^^^
+NameError: name 'prev_max_id' is not defined. Did you mean: 'new_max_id'?
+2026-06-27 20:43:39,015 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TVP_Amex_20260627.log
+2026-06-27 20:56:31,820 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TVP_Amex_20260627.log
+2026-06-27 20:56:55,849 [INFO] ✅ Importación completada: 135 filas insertadas.
+2026-06-27 20:56:55,854 [INFO] Snapshot post-insert guardado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/audit_insert_output/audit_post_insert_20260627T205655.csv
+2026-06-27 20:56:55,855 [INFO] MAX(Id) después de inserción=135
+2026-06-27 20:56:55,855 [WARNING] No se pudo comparar MAX(Id) previo/post. prev=None new=135
+2026-06-27 20:56:55,859 [INFO] Se usó suma total de tabla como fallback para comparativa.
+2026-06-27 20:56:55,859 [INFO] Comparativa TotalDelEnvio: CSV_sum=268604.67 DB_sum=268604.67 Diff=0.0
+2026-06-27 20:57:32,528 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TVP_Amex_20260627.log
+2026-06-27 20:58:16,540 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TVP_Amex_20260627.log
+2026-06-27 20:58:41,329 [INFO] ✅ Importación completada: 222 filas insertadas.
+2026-06-27 20:58:41,338 [INFO] Snapshot post-insert guardado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/audit_insert_output/audit_post_insert_20260627T205841.csv
+2026-06-27 20:58:41,340 [INFO] MAX(Id) después de inserción=357
+2026-06-27 20:58:41,342 [INFO] Filas esperadas=222, Filas insertadas=222
+2026-06-27 20:58:41,347 [INFO] Comparativa TotalDelEnvio: CSV_sum=617086.0900000001 DB_sum=617086.09 Diff=1.1641532182693481e-10
+2026-06-27 21:03:33,280 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TVP_Amex_20260627.log
+2026-06-27 21:11:20,584 [INFO] ✅ Importación completada: 340 filas insertadas.
+2026-06-27 21:11:20,592 [INFO] Snapshot post-insert guardado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/audit_insert_output/audit_post_insert_20260627T211120.csv
+2026-06-27 21:11:20,594 [INFO] MAX(Id) después de inserción=697
+2026-06-27 21:11:20,594 [INFO] Filas esperadas=340, Filas insertadas=340
+2026-06-27 21:11:20,601 [INFO] Comparativa TotalDelEnvio: CSV_sum=768325.64 DB_sum=768325.64 Diff=0.0
+2026-06-27 21:49:41,828 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TVP_Amex_20260627.log

@@ -1,0 +1,337 @@
+2026-06-27 18:47:52,071 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TPV_Amex_20260627.log
+2026-06-27 18:47:52,515 [ERROR] No se pudo obtener MAX(Id) previo a inserción
+Traceback (most recent call last):
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/cursors.py", line 159, in execute
+    result = self._query(query)
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/cursors.py", line 330, in _query
+    conn.query(q)
+    ~~~~~~~~~~^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 582, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 847, in _read_query_result
+    result.read()
+    ~~~~~~~~~~~^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 1245, in read
+    first_packet = self.connection._read_packet()
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 803, in _read_packet
+    packet.raise_for_error()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/err.py", line 154, in raise_mysql_exception
+    raise errorclass(errno, errval, sqlstate=sqlstate)
+pymysql.err.ProgrammingError: (1146, "Table 'PRUEBAS_TESORERIA.TPV_Amex' doesn't exist")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/LayoutNewTPVAMEX.py", line 708, in <module>
+    res = conn.execute(q)
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/cursors.py", line 159, in execute
+    result = self._query(query)
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/cursors.py", line 330, in _query
+    conn.query(q)
+    ~~~~~~~~~~^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 582, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 847, in _read_query_result
+    result.read()
+    ~~~~~~~~~~~^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 1245, in read
+    first_packet = self.connection._read_packet()
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 803, in _read_packet
+    packet.raise_for_error()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/err.py", line 154, in raise_mysql_exception
+    raise errorclass(errno, errval, sqlstate=sqlstate)
+sqlalchemy.exc.ProgrammingError: (pymysql.err.ProgrammingError) (1146, "Table 'PRUEBAS_TESORERIA.TPV_Amex' doesn't exist")
+[SQL: SELECT MAX(Id) FROM PRUEBAS_TESORERIA.TPV_Amex]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-06-27 18:49:14,646 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TPV_Amex_20260627.log
+2026-06-27 18:49:15,014 [ERROR] No se pudo obtener MAX(Id) previo a inserción
+Traceback (most recent call last):
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/cursors.py", line 159, in execute
+    result = self._query(query)
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/cursors.py", line 330, in _query
+    conn.query(q)
+    ~~~~~~~~~~^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 582, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 847, in _read_query_result
+    result.read()
+    ~~~~~~~~~~~^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 1245, in read
+    first_packet = self.connection._read_packet()
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 803, in _read_packet
+    packet.raise_for_error()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/err.py", line 154, in raise_mysql_exception
+    raise errorclass(errno, errval, sqlstate=sqlstate)
+pymysql.err.ProgrammingError: (1146, "Table 'PRUEBAS_TESORERIA.TPV_Amex' doesn't exist")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/LayoutNewTPVAMEX.py", line 708, in <module>
+    res = conn.execute(q)
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/cursors.py", line 159, in execute
+    result = self._query(query)
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/cursors.py", line 330, in _query
+    conn.query(q)
+    ~~~~~~~~~~^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 582, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 847, in _read_query_result
+    result.read()
+    ~~~~~~~~~~~^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 1245, in read
+    first_packet = self.connection._read_packet()
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 803, in _read_packet
+    packet.raise_for_error()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/err.py", line 154, in raise_mysql_exception
+    raise errorclass(errno, errval, sqlstate=sqlstate)
+sqlalchemy.exc.ProgrammingError: (pymysql.err.ProgrammingError) (1146, "Table 'PRUEBAS_TESORERIA.TPV_Amex' doesn't exist")
+[SQL: SELECT MAX(Id) FROM PRUEBAS_TESORERIA.TPV_Amex]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-06-27 18:51:59,108 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TPV_Amex_20260627.log
+2026-06-27 18:51:59,447 [ERROR] No se pudo obtener MAX(Id) previo a inserción
+Traceback (most recent call last):
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/cursors.py", line 159, in execute
+    result = self._query(query)
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/cursors.py", line 330, in _query
+    conn.query(q)
+    ~~~~~~~~~~^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 582, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 847, in _read_query_result
+    result.read()
+    ~~~~~~~~~~~^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 1245, in read
+    first_packet = self.connection._read_packet()
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 803, in _read_packet
+    packet.raise_for_error()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/err.py", line 154, in raise_mysql_exception
+    raise errorclass(errno, errval, sqlstate=sqlstate)
+pymysql.err.ProgrammingError: (1146, "Table 'PRUEBAS_TESORERIA.TPV_Amex' doesn't exist")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/LayoutNewTPVAMEX.py", line 708, in <module>
+    res = conn.execute(q)
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/cursors.py", line 159, in execute
+    result = self._query(query)
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/cursors.py", line 330, in _query
+    conn.query(q)
+    ~~~~~~~~~~^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 582, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 847, in _read_query_result
+    result.read()
+    ~~~~~~~~~~~^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 1245, in read
+    first_packet = self.connection._read_packet()
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/connections.py", line 803, in _read_packet
+    packet.raise_for_error()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/gumercindo/anaconda3/lib/python3.13/site-packages/pymysql/err.py", line 154, in raise_mysql_exception
+    raise errorclass(errno, errval, sqlstate=sqlstate)
+sqlalchemy.exc.ProgrammingError: (pymysql.err.ProgrammingError) (1146, "Table 'PRUEBAS_TESORERIA.TPV_Amex' doesn't exist")
+[SQL: SELECT MAX(Id) FROM PRUEBAS_TESORERIA.TPV_Amex]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-06-27 19:41:54,130 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TPV_Amex_20260627.log
+2026-06-27 19:57:02,467 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TPV_Amex_20260627.log
+2026-06-27 20:01:50,842 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TPV_Amex_20260627.log
+2026-06-27 20:03:19,342 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TPV_Amex_20260627.log
+2026-06-27 20:05:06,582 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TPV_Amex_20260627.log
+2026-06-27 20:06:11,064 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TPV_Amex_20260627.log
+2026-06-27 20:11:03,215 [INFO] Bloque 0 inicializado. Logging configurado en: /home/gumercindo/Documentos/python/scripts/CARGA DE DATOS EN BASE/Logs/import_TPV_Amex_20260627.log

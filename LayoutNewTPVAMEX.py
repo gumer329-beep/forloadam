@@ -42,7 +42,7 @@ data_dir = os.path.join(
 
 # ------------------ CONEXIÓN A MARIA DB ------------------
 # Ajusta estas credenciales según tu entorno
-user = ""  # usuario DB
+user = "root"  # usuario DB
 password = quote_plus("")  # contraseña (quote_plus para caracteres especiales)
 host = ""  # host o IP del servidor
 db = ""  # base de datos destino
@@ -96,7 +96,7 @@ decimal_cols = [
 ]
 
 # Columnas a excluir al comparar con DDL (metadatos, audit columns, etc.)
-exclude_cols = {"Id", "CrtdDateTime"}
+exclude_cols = {"id", "creado_en","actualizado_en"}
 
 # Validaciones post-insert: {columna: "sum" | "count" | ...}
 validations = {"TotalDelEnvio": "sum"}
@@ -692,14 +692,110 @@ if "IdSucursal" in df_validos.columns and "IdSucursal" not in maria_cols_filtere
 # Filas válidas finales
 print(f"✅ Filas válidas finales: {len(df_validos)}")
 print(f"⚠️ Filas inválidas finales: {len(df_invalidos)}")
+# Después de validar columnas, crear df_insert
+cols_to_insert = [c for c in maria_cols_filtered if c in df_validos.columns]
+if "IdSucursal" in df_validos.columns and "IdSucursal" not in cols_to_insert:
+    cols_to_insert.append("IdSucursal")
+
+if not cols_to_insert:
+    print("❌ No hay columnas coincidentes para insertar.")
+    sys.exit(1)
+
+# ============ AQUÍ SE CREA df_insert ============
+df_insert = df_validos[cols_to_insert].copy()
+
 
 # ========================== BLOQUE 4: PREPARAR E INSERTAR (SIN auditoría) =========================
+# ========================== BLOQUE 4: PREPARAR E INSERTAR (CON DEDUPLICACIÓN) =========================
 if verbose:
     print(
-        "\n========================= BLOQUE 4: PREPARAR E INSERTAR (SIN auditoría) ========================="
+        "\n========================= BLOQUE 4: PREPARAR E INSERTAR (CON DEDUPLICACIÓN) ========================="
     )
+prev_max_id = None
+new_max_id = None
+insert_success = False
 
-# ADICIÓN: capturar Id máximo previo a la inserción (si la tabla tiene columna Id autoincremental)
+# ---------- 1. Definir columnas que identifican duplicados ----------
+# Ajusta estas columnas según tu lógica de negocio
+duplicate_check_cols = ['NumeroFacturaDeCargos', 'NumeroDePago']
+# Si quieres usar todas las columnas excepto id/auditoría:
+# duplicate_check_cols = [c for c in df_insert.columns if c not in ['id', 'creado_en', 'actualizado_en']]
+# Si quieres incluir IdAfiliacion también:
+# duplicate_check_cols = ['NumeroFacturaDeCargos', 'NumeroDePago', 'IdAfiliacion']
+
+# ---------- 2. Guardar referencia original antes de filtrar ----------
+df_insert_original = df_insert.copy()  # <--- AHORA df_insert YA EXISTE
+total_original = len(df_insert_original)
+
+# ---------- 3. Función para detectar duplicados ----------
+def detect_duplicates(df, engine, table, key_columns):
+    """
+    Detecta qué filas ya existen en la tabla basado en columnas clave.
+    Retorna: DataFrame con filas duplicadas, DataFrame con filas nuevas
+    """
+    if not key_columns or len(df) == 0:
+        return pd.DataFrame(), df
+    
+    # Verificar que las columnas existen en el DataFrame
+    existing_cols = [col for col in key_columns if col in df.columns]
+    if not existing_cols:
+        print("⚠️ Ninguna de las columnas de duplicado existe en el DataFrame.")
+        return pd.DataFrame(), df
+    
+    with engine.connect() as conn:
+        # Crear set de claves existentes
+        existing_keys = set()
+        
+        # Para eficiencia, consultar en lotes
+        batch_size = 1000
+        total_rows = len(df)
+        
+        print(f"🔍 Verificando duplicados en {total_rows} filas...")
+        
+        for start in range(0, total_rows, batch_size):
+            end = min(start + batch_size, total_rows)
+            batch_df = df.iloc[start:end]
+            
+            for _, row in batch_df.iterrows():
+                # Construir condición WHERE para esta fila
+                conditions = []
+                params = {}
+                for col in existing_cols:
+                    val = row[col]
+                    if pd.isna(val):
+                        conditions.append(f"{col} IS NULL")
+                    else:
+                        conditions.append(f"{col} = :{col}")
+                        params[col] = val
+                
+                where_clause = ' AND '.join(conditions)
+                query = f"SELECT 1 FROM {table} WHERE {where_clause} LIMIT 1"
+                
+                try:
+                    result = conn.execute(text(query), params).fetchone()
+                    if result:
+                        key = tuple(row[col] if not pd.isna(row[col]) else None for col in existing_cols)
+                        existing_keys.add(key)
+                except Exception as e:
+                    print(f"⚠️ Error consultando duplicado: {e}")
+                    continue
+            
+            # Mostrar progreso
+            if verbose and (start + batch_size) % (batch_size * 10) == 0:
+                print(f"   Procesadas {min(end, total_rows)}/{total_rows} filas...")
+    
+    # Identificar duplicados en df
+    duplicate_mask = df.apply(
+        lambda row: tuple(row[col] if not pd.isna(row[col]) else None for col in existing_cols) in existing_keys,
+        axis=1
+    )
+    
+    df_duplicates = df[duplicate_mask].copy()
+    df_new = df[~duplicate_mask].copy()
+    
+    return df_duplicates, df_new
+
+# Capturar MAX(Id) previo (tu código existente)
 prev_max_id = None
 try:
     if "maria_engine" in globals() and maria_engine is not None:
@@ -708,82 +804,62 @@ try:
             res = conn.execute(q)
             prev_max_id = res.scalar()
             print(f"🔎 MAX(Id) previo a la inserción: {prev_max_id}")
-            try:
-                logger.info("Previo a inserción, MAX(Id)=%s", prev_max_id)
-            except Exception:
-                pass
-    else:
-        print("⚠️ maria_engine no está definido; no se obtuvo MAX(Id) previo.")
-        try:
-            logger.warning(
-                "maria_engine no está definido; no se obtuvo MAX(Id) previo."
-            )
-        except Exception:
-            pass
 except Exception as e:
     print("⚠️ Error obteniendo MAX(Id) previo:", str(e))
+
+# ---------- 4. Ejecutar detección de duplicados ----------
+print(f"📊 Filas totales a evaluar: {len(df_insert)}")
+print(f"🔑 Columnas para detectar duplicados: {duplicate_check_cols}")
+
+df_duplicates, df_insert_new = detect_duplicates(
+    df_insert, 
+    maria_engine, 
+    target_table, 
+    duplicate_check_cols
+)
+
+duplicates_count = len(df_duplicates)
+new_count = len(df_insert_new)
+
+print(f"📊 Filas duplicadas encontradas: {duplicates_count}")
+print(f"📊 Filas nuevas a insertar: {new_count}")
+
+# ---------- 5. Guardar reporte de duplicados ----------
+if duplicates_count > 0:
+    # Guardar duplicados en archivo CSV para auditoría
+    ts = datetime.now().strftime("%Y%m%dT%H%M%S")
+    dup_file = os.path.join(data_dir, f"duplicados_encontrados_{ts}.csv")
     try:
-        logger.exception("No se pudo obtener MAX(Id) previo a inserción")
-    except Exception:
-        pass
-# FIN ADICIÓN
+        df_duplicates.to_csv(dup_file, index=False, encoding='utf-8-sig')
+        print(f"📁 Lista de duplicados guardada en: {dup_file}")
+    except Exception as e:
+        print(f"⚠️ No se pudo guardar archivo de duplicados: {e}")
 
-# Columnas a insertar según DDL vs df_validos
-cols_to_insert = [c for c in maria_cols_filtered if c in df_validos.columns]
-if "IdSucursal" in df_validos.columns and "IdSucursal" not in cols_to_insert:
-    cols_to_insert.append("IdSucursal")
+# ---------- 6. Actualizar df_insert con solo datos nuevos ----------
+df_insert = df_insert_new
 
-if not cols_to_insert:
-    print(
-        "❌ No hay columnas coincidentes para insertar. Revisa la configuración o el CSV."
-    )
-    sys.exit(1)
+if len(df_insert) == 0:
+    print("✅ No hay datos nuevos para insertar. Todos los registros ya existen.")
+    print(f"ℹ️ {total_original} filas procesadas, {duplicates_count} duplicados omitidos.")
+    sys.exit(0)
 
-# DataFrame que vamos a insertar (NO se añaden columnas de auditoría)
-df_insert = df_validos[cols_to_insert].copy()
-
-# Guardar snapshot pre-insert (copia local del DataFrame que se va a insertar)
-# timestamp simple para nombre de archivo
+# ---------- 7. Guardar snapshot pre-insert (solo datos nuevos) ----------
 ts = datetime.now().strftime("%Y%m%dT%H%M%S")
 snapshot_pre = os.path.join(data_dir, f"audit_pre_insert_{ts}.csv")
 try:
     df_insert.to_csv(snapshot_pre, index=False, encoding="utf-8")
-    print(f"📁 Snapshot pre-insert guardado en: {snapshot_pre}")
-    try:
-        logger.info("Snapshot pre-insert guardado en: %s", snapshot_pre)
-    except Exception:
-        pass
+    print(f"📁 Snapshot pre-insert (datos nuevos) guardado en: {snapshot_pre}")
 except Exception as e:
     print("⚠️ No se pudo guardar snapshot pre-insert:", str(e))
-    try:
-        logger.exception("No se pudo guardar snapshot pre-insert: %s", str(e))
-    except Exception:
-        pass
 
-# NO intentamos crear ni insertar columnas de auditoría en la tabla destino.
-# (Se eliminó cualquier ALTER TABLE o adición de _RunId / _RunTimestampUTC)
-
-# Mostrar resumen compacto de inserción (columnas envueltas para legibilidad)
-print(f"📊 Filas a insertar: {len(df_insert)}")
+# ---------- 8. Confirmación interactiva ----------
 if verbose:
-    cols_str = ", ".join(list(df_insert.columns))
-    max_width = 80
-    wrapped = []
-    while cols_str:
-        if len(cols_str) <= max_width:
-            wrapped.append(cols_str)
-            break
-        cut = cols_str.rfind(",", 0, max_width)
-        if cut == -1:
-            cut = max_width
-        wrapped.append(cols_str[: cut + 1].strip())
-        cols_str = cols_str[cut + 1 :].strip()
-    print("📋 Columnas a insertar:")
-    for line in wrapped:
-        print("   " + line)
+    print("\n📋 Resumen de inserción:")
+    print(f"   Filas nuevas: {len(df_insert)}")
+    print(f"   Filas duplicadas omitidas: {duplicates_count}")
+    print(f"   Columnas a insertar: {list(df_insert.columns)}")
 
-# Confirmación clara y por defecto negativa
-confirm = input("⚠️ Escribe 'Si' para confirmar la importación a MariaDB (enter = No): ")
+confirm = input("\n⚠️ Escribe 'Si' para confirmar la importación a MariaDB (enter = No): ")
 if confirm.strip().lower() != "si":
     print("Importación cancelada por el usuario.")
     try:
@@ -792,7 +868,7 @@ if confirm.strip().lower() != "si":
         pass
     sys.exit(0)
 
-# ADICIÓN: ejecutar inserción en bloque (to_sql) usando df_insert y marcar éxito con flag insert_success
+# ---------- 9. Insertar datos ----------
 insert_success = False
 try:
     df_insert = df_insert.fillna("").astype(str)
@@ -805,7 +881,7 @@ try:
     )
     print("✅ Importación completada correctamente.")
     try:
-        logger.info("Importación completada correctamente.")
+        logger.info(f"✅ Importación completada: {len(df_insert)} filas insertadas.")
     except Exception:
         pass
     insert_success = True
@@ -817,6 +893,8 @@ except Exception as e:
     except Exception:
         pass
     sys.exit(1)
+
+# ... resto del BLOQUE 4 y BLOQUE 5 ...
 # FIN ADICIÓN
 
 # ========================== BLOQUE 5: POST-INSERT (snapshot local) =========================
